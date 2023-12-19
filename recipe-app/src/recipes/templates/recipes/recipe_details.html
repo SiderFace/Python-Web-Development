@@ -8,8 +8,8 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <title>Welcome to My Recipe App</title>
-      
+      <title>{{ recipe.recipe_name }}</title>
+
       <style>
          body {
             font-family: Arial, sans-serif;
@@ -32,56 +32,47 @@
             text-align: center;
          }
 
-         .search-bar {
-            margin: 20px 0;
-            padding: 10px;
-            border: none;
-            width: 60%;
-            font-size: 16px;
-         }
-
-         .your-recipes {
+         .recipe-details {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
          }
 
-         .recipe-card {
+         .recipe-image {
+            max-width: 10%;
+            max-height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+         }
+
+         .recipe-details-section {
             margin: 10px;
             background-color: rgba(255, 255, 255, 0.247);
             border-radius: 8px;
             text-align: center;
             overflow: hidden;
             width: 300px;
-            height: 450px;
+            height: auto;
             box-sizing: border-box;
+            padding: 10px;
          }
 
-         .recipe-card p {
+        .recipe-details-section p {
             color: #ffffff;
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
             font-weight: bold;
             font-size: 18px;
+            margin: 5px 0;
          }
 
-         .recipe-card img {
+         footer {
+            background-color: rgba(0, 0, 0, 0.384);
+            text-align: center;
+            padding: 0.025em;
+            position: fixed;
+            bottom: 0;
             width: 100%;
-            height: 90%;
-            object-fit: cover;
-            border-radius: 8px;
-            box-sizing: border-box;
-            border: 3px solid #fff;
-         }
-
-         a {
-            color: #f1d42e;
-            text-decoration: none;
-            font-weight: bold;
-            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
-         }
-
-         a:hover {
-            color: #fc6027;
          }
 
          h2 {
@@ -93,33 +84,34 @@
             color: #ffffff;
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
          }
-
-         footer {
-            background-color: rgba(0, 0, 0, 0.384);
-            text-align: center;
-            padding: 0.025em;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-         }
       </style>
-      
+
    </head>
 
    <body>
 
       <header>
-         <h1>Welcome to My Recipe App</h1>
-         <input type="text" class="search-bar" placeholder="Search for recipes...">
+         <h1>{{ recipe.recipe_name }}</h1>
       </header>
 
       <main>
-         <h2>Explore and discover delicious recipes!</h2>
+         <h3>{{ recipe.description_details }}</h3>
+ 
+         <div class="recipe-details">
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" style="max-width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
 
-         <h3>Click the link to go to your saved recipes</h3>
-         <a href="{% url 'recipes:recipe_list' %}">Your Recipes</a>
-         <div>
-            <p>Lorem Ipsum</p>
+            <div class="recipe-details-section">
+               <h2>Ingredients: </h2>
+               <p>{{ recipe.ingredients }}</p>
+            </div>
+            <div class="recipe-details-section">
+               <h2>Cooking Time: </h2>
+               <p>{{ recipe.cooking_time }} minutes</p>
+            </div>
+            <div class="recipe-details-section">
+               <h2>Difficulty: </h2>
+               <p>{{ recipe.difficulty_rating }}</p>
+            </div>
          </div>
       </main>
 

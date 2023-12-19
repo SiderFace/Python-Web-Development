@@ -9,7 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
       <title>Welcome to My Recipe App</title>
-      
+
       <style>
          body {
             font-family: Arial, sans-serif;
@@ -28,16 +28,16 @@
          }
 
          main {
-            padding: 2em;
-            text-align: center;
+               padding: 2em;
+               text-align: center;
          }
 
          .search-bar {
-            margin: 20px 0;
-            padding: 10px;
-            border: none;
-            width: 60%;
-            font-size: 16px;
+               margin: 20px 0;
+               padding: 10px;
+               border: none;
+               width: 60%;
+               font-size: 16px;
          }
 
          .your-recipes {
@@ -73,26 +73,6 @@
             border: 3px solid #fff;
          }
 
-         a {
-            color: #f1d42e;
-            text-decoration: none;
-            font-weight: bold;
-            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
-         }
-
-         a:hover {
-            color: #fc6027;
-         }
-
-         h2 {
-            color: #ffffff;
-            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
-         }
-
-         h3 {
-            color: #ffffff;
-            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
-         }
 
          footer {
             background-color: rgba(0, 0, 0, 0.384);
@@ -102,6 +82,17 @@
             bottom: 0;
             width: 100%;
          }
+
+         h2 {
+            color: #ffffff;   
+            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);   
+         }
+
+         h3 {
+            color: #ffffff;   
+            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);   
+         }
+
       </style>
       
    </head>
@@ -109,17 +100,22 @@
    <body>
 
       <header>
-         <h1>Welcome to My Recipe App</h1>
-         <input type="text" class="search-bar" placeholder="Search for recipes...">
+         <h1>Your Recipes</h1>
       </header>
 
       <main>
-         <h2>Explore and discover delicious recipes!</h2>
+         <h3>Your saved recipes to cook again or share with friends!</h3>
+         <p>Click any of your recipes for the full recipe description</p>
 
-         <h3>Click the link to go to your saved recipes</h3>
-         <a href="{% url 'recipes:recipe_list' %}">Your Recipes</a>
-         <div>
-            <p>Lorem Ipsum</p>
+         <div class="your-recipes">
+            {% for recipe in recipes %}
+               <div class="recipe-card">
+                  <a href="{% url 'recipes:recipe_detail' recipe.id %}">
+                     <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" width="200" height="150">
+                     <p>{{ recipe.recipe_name }}</p>
+                  </a>
+               </div>
+            {% endfor %}
          </div>
       </main>
 
