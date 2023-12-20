@@ -25,6 +25,23 @@
             background-color: rgba(0, 0, 0, 0.493);
             text-align: center;
             padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+         }
+
+         .logout-button {
+            color: #fff;
+            background-color: #cf643d;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #fc6027;
+            border-radius: 5px;
+         }
+
+         .logout-button:hover {
+            background-color: #db3d19e8;
          }
 
          main {
@@ -75,6 +92,10 @@
             width: 100%;
          }
 
+         h1 {
+            margin: 0 auto;
+         }
+
          h2 {
             color: #ffffff;
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
@@ -84,6 +105,7 @@
             color: #ffffff;
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
          }
+
       </style>
 
    </head>
@@ -92,13 +114,19 @@
 
       <header>
          <h1>{{ recipe.recipe_name }}</h1>
+
+         <a class="logout-button" href="{% url 'recipes:user_logout' %}">Logout</a>
       </header>
 
       <main>
          <h3>{{ recipe.description_details }}</h3>
  
          <div class="recipe-details">
-            <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" style="max-width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+            <img 
+               src="{{ recipe.image.url }}" 
+               alt="{{ recipe.recipe_name }}" 
+               style="max-width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;"
+            >
 
             <div class="recipe-details-section">
                <h2>Ingredients: </h2>

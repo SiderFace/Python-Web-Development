@@ -1,5 +1,7 @@
 from django.db import models
 
+
+
 class Recipe(models.Model):
    recipe_name = models.CharField(max_length=255)
    ingredients = models.TextField()
@@ -24,5 +26,4 @@ class Recipe(models.Model):
    def save(self, *args, **kwargs):
       self.calculate_difficulty()
       super().save(*args, **kwargs)
-
-      
+ 

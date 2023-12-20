@@ -8,7 +8,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <title>Welcome to My Recipe App</title>
+      <title>My Recipe App</title>
       
       <style>
          body {
@@ -25,19 +25,37 @@
             background-color: rgba(0, 0, 0, 0.493);
             text-align: center;
             padding: 1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .login-button {
+            color: #fff;
+            background-color: #cf643d;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #fc6027;
+            border-radius: 5px;
+            margin-top: 10px;
+         }
+
+         .login-button:hover {
+            background-color: #db3d19e8;
+         }
+
+         .search-bar {
+            margin: 20px 0 10px 0;
+            padding: 10px;
+            border: none;
+            width: 60%;
+            font-size: 16px;
          }
 
          main {
             padding: 2em;
             text-align: center;
-         }
-
-         .search-bar {
-            margin: 20px 0;
-            padding: 10px;
-            border: none;
-            width: 60%;
-            font-size: 16px;
          }
 
          .your-recipes {
@@ -73,15 +91,19 @@
             border: 3px solid #fff;
          }
 
-         a {
+         .login-link {
             color: #f1d42e;
             text-decoration: none;
             font-weight: bold;
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
          }
 
-         a:hover {
+         .login-link:hover {
             color: #fc6027;
+         }
+
+         h1 {
+            margin: 0 auto;
          }
 
          h2 {
@@ -110,15 +132,23 @@
 
       <header>
          <h1>Welcome to My Recipe App</h1>
+
+         <a class="login-button" href="{% url 'recipes:user_login' %}">Login</a>
+
          <input type="text" class="search-bar" placeholder="Search for recipes...">
+
       </header>
+
+      
 
       <main>
          <h2>Explore and discover delicious recipes!</h2>
 
-         <h3>Click the link to go to your saved recipes</h3>
-         <a href="{% url 'recipes:recipe_list' %}">Your Recipes</a>
+         <h3><a href="{% url 'recipes:user_login' %}" class="login-link">Login</a> to go to your saved recipes</h3>
+         
+         <a class="login-button" href="{% url 'recipes:user_login' %}">Login</a>
          <div>
+            <br> <br>
             <p>Lorem Ipsum</p>
          </div>
       </main>

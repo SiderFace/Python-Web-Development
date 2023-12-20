@@ -8,7 +8,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <title>Welcome to My Recipe App</title>
+      <title>Your Recipes</title>
 
       <style>
          body {
@@ -25,6 +25,23 @@
             background-color: rgba(0, 0, 0, 0.493);
             text-align: center;
             padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+         }
+
+         .logout-button {
+            color: #fff;
+            background-color: #cf643d;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #fc6027;
+            border-radius: 5px;
+         }
+
+         .logout-button:hover {
+            background-color: #db3d19e8;
          }
 
          main {
@@ -83,6 +100,10 @@
             width: 100%;
          }
 
+         h1 {
+            margin: 0 auto;
+         }
+
          h2 {
             color: #ffffff;   
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);   
@@ -101,6 +122,8 @@
 
       <header>
          <h1>Your Recipes</h1>
+
+         <a class="logout-button" href="{% url 'recipes:user_logout' %}">Logout</a>
       </header>
 
       <main>
