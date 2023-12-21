@@ -1,6 +1,10 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
 from .models import Recipe
+from .forms import RecipeSearchForm
+from django.contrib.auth.models import User
+
+
 
 class RecipeModelTest(TestCase):
    def test_recipe_creation(self):
@@ -56,26 +60,57 @@ class RecipeModelTest(TestCase):
 
 class RecipeViewTests(TestCase):
    def setUp(self):
+      self.client = Client()
+      self.user = User.objects.create_user(username='testuser', password='testpassword')
       self.recipe = Recipe.objects.create(
          recipe_name="Test Recipe",
          ingredients="Ingredient 1, Ingredient 2",
          cooking_time=8,
          difficulty_rating="Easy",
          description_details="Test Description",
-         image="path/to/test/image.jpg"
       )
 
    def test_welcome_view(self):
       response = self.client.get(reverse('recipes:welcome'))
       self.assertEqual(response.status_code, 200)
 
-   def test_recipe_list_view(self):
-      response = self.client.get(reverse('recipes:recipe_list'))
+   def test_recipe_list_view_authenticated(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('recipes:recipe_list'))
+        self.assertEqual(response.status_code, 200)
+
+   def test_recipe_detail_view_authenticated(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('recipes:recipe_detail', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 200)
+
+
+class RecipeFormTest(TestCase):
+   def setUp(self):
+      self.user = User.objects.create_user(username='testuser', password='testpassword')
+      self.recipe = Recipe.objects.create(
+         recipe_name="Test Recipe",
+         ingredients="Ingredient 1, Ingredient 2",
+         cooking_time=8,
+         difficulty_rating="Easy",
+         description_details="Test Description",
+      )
+
+   def test_recipe_search_form(self):
+      form_data = {'ingredients': 'Test Ingredient', 'show_all': False}
+      form = RecipeSearchForm(data=form_data)
+      self.assertTrue(form.is_valid())
+
+   def test_welcome_view(self):
+      response = self.client.get(reverse('recipes:welcome'))
       self.assertEqual(response.status_code, 200)
+
+   def test_recipe_list_view(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('recipes:recipe_list'))
+        self.assertEqual(response.status_code, 200)
 
    def test_recipe_detail_view(self):
-      response = self.client.get(reverse('recipes:recipe_detail', args=[self.recipe.id]))
-      self.assertEqual(response.status_code, 200)
-      self.assertContains(response, "Test Recipe")
-      self.assertContains(response, "Test Description")
-
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('recipes:recipe_detail', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 200)

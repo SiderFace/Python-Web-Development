@@ -26,4 +26,3 @@ class Recipe(models.Model):
    def save(self, *args, **kwargs):
       self.calculate_difficulty()
       super().save(*args, **kwargs)
- 

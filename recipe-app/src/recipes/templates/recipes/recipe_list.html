@@ -57,7 +57,7 @@
                font-size: 16px;
          }
 
-         .your-recipes {
+         .displayed-recipes {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -114,6 +114,11 @@
             text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);   
          }
 
+         p {
+            color: #ffffff;   
+            text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);   
+         }
+
       </style>
       
    </head>
@@ -121,26 +126,44 @@
    <body>
 
       <header>
-         <h1>Your Recipes</h1>
+         <h1>Find Recipes</h1>
 
          <a class="logout-button" href="{% url 'recipes:user_logout' %}">Logout</a>
       </header>
 
       <main>
-         <h3>Your saved recipes to cook again or share with friends!</h3>
+         <h3>Search and filter the available recipes by entering an ingredient:</h3>
+     
+         <form method="get" action="{% url 'recipes:recipe_list' %}">
+            {{ form.ingredients }}
+            <button type="submit">Search</button>
+            <br> <br>
+            <label for="{{ form.show_all.id_for_label }}">Show All</label>
+            {{ form.show_all }}
+         </form>
+         <br>
          <p>Click any of your recipes for the full recipe description</p>
-
-         <div class="your-recipes">
-            {% for recipe in recipes %}
-               <div class="recipe-card">
-                  <a href="{% url 'recipes:recipe_detail' recipe.id %}">
-                     <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" width="200" height="150">
-                     <p>{{ recipe.recipe_name }}</p>
-                  </a>
-               </div>
-            {% endfor %}
+     
+         {% if recipes %}
+         <div class="displayed-recipes">
+             {% for recipe in recipes %}
+                 <div class="recipe-card">
+                     <a href="{% url 'recipes:recipe_detail' recipe.id %}">
+                         <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" width="200" height="150">
+                         <p>{{ recipe.recipe_name }}</p>
+                     </a>
+                 </div>
+             {% endfor %}
          </div>
-      </main>
+         {% endif %}
+         <br>
+         <div class="charts">
+             <img src="data:image/png;base64,{{ bar_chart_img }}" alt="Bar Chart">
+             <img src="data:image/png;base64,{{ pie_chart_img }}" alt="Pie Chart">
+             <img src="data:image/png;base64,{{ line_chart_img }}" alt="Line Chart">
+         </div>
+     
+     </main>
 
       <footer>
          <p>&copy; 2023 Siders & CareerFoundry Recipe App</p>
